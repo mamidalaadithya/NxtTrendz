@@ -1,6 +1,6 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
-import {Redirect} from 'react-router-dom'
+import {Navigate} from 'react-router-dom'
 
 import './index.css'
 
@@ -10,6 +10,7 @@ class LoginForm extends Component {
     password: '',
     showSubmitError: false,
     errorMsg: '',
+    redirectToHome: false,
   }
 
   onChangeUsername = event => {
@@ -21,12 +22,10 @@ class LoginForm extends Component {
   }
 
   onSubmitSuccess = jwtToken => {
-    const {history} = this.props
-
     Cookies.set('jwt_token', jwtToken, {
       expires: 30,
     })
-    history.replace('/')
+    this.setState({redirectToHome: true})
   }
 
   onSubmitFailure = errorMsg => {
@@ -92,11 +91,11 @@ class LoginForm extends Component {
   }
 
   render() {
-    const {showSubmitError, errorMsg} = this.state
+    const {showSubmitError, errorMsg, redirectToHome} = this.state
     const jwtToken = Cookies.get('jwt_token')
 
-    if (jwtToken !== undefined) {
-      return <Redirect to="/" />
+    if (jwtToken !== undefined || redirectToHome) {
+      return <Navigate to="/" />
     }
 
     return (

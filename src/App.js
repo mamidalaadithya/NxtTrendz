@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {Route, Switch, Redirect} from 'react-router-dom'
+import {Routes, Route, Navigate} from 'react-router-dom'
 
 import LoginForm from './components/LoginForm'
 import Home from './components/Home'
@@ -9,6 +9,7 @@ import Cart from './components/Cart'
 import NotFound from './components/NotFound'
 import ProtectedRoute from './components/ProtectedRoute'
 import CartContext from './context/CartContext'
+import Cookies from 'js-cookie'
 
 import './App.css'
 
@@ -87,6 +88,7 @@ class App extends Component {
 
   render() {
     const {cartList} = this.state
+    const jwtToken = Cookies.get('jwt_token')
 
     return (
       <CartContext.Provider
@@ -99,19 +101,27 @@ class App extends Component {
           removeAllCartItems: this.removeAllCartItems,
         }}
       >
-        <Switch>
-          <Route exact path="/login" component={LoginForm} />
-          <ProtectedRoute exact path="/" component={Home} />
-          <ProtectedRoute exact path="/products" component={Products} />
-          <ProtectedRoute
-            exact
-            path="/products/:id"
-            component={ProductItemDetails}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              jwtToken !== undefined ? (
+                <Navigate to="/home" replace />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
           />
-          <ProtectedRoute exact path="/cart" component={Cart} />
-          <Route path="/not-found" component={NotFound} />
-          <Redirect to="not-found" />
-        </Switch>
+          <Route path="/login" element={<LoginForm />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/home" element={<Home />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:id" element={<ProductItemDetails />} />
+            <Route path="/cart" element={<Cart />} />
+          </Route>
+          <Route path="/not-found" element={<NotFound />} />
+          <Route path="*" element={<Navigate to="/not-found" />} />
+        </Routes>
       </CartContext.Provider>
     )
   }

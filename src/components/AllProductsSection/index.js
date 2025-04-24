@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import Loader from 'react-loader-spinner'
+import {ThreeDots} from 'react-loader-spinner'
 import Cookies from 'js-cookie'
 import FiltersGroup from '../FiltersGroup'
 import ProductCard from '../ProductCard'
@@ -127,7 +127,7 @@ class AllProductsSection extends Component {
 
   renderLoadingView = () => (
     <div className="products-loader-container">
-      <Loader type="ThreeDots" color="#0b69ff" height="50" width="50" />
+      <ThreeDots color="#0b69ff" height={50} width={50} />
     </div>
   )
 

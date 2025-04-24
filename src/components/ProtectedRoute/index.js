@@ -1,13 +1,14 @@
-import {Redirect, Route} from 'react-router-dom'
+import {Navigate, Outlet, useLocation} from 'react-router-dom'
 import Cookie from 'js-cookie'
 
-const ProtectedRoute = props => {
+const ProtectedRoute = () => {
   const token = Cookie.get('jwt_token')
+  const location = useLocation()
 
   if (token === undefined) {
-    return <Redirect to="/login" />
+    return <Navigate to="/login" state={{from: location}} replace />
   }
-  return <Route {...props} />
+  return <Outlet />
 }
 
 export default ProtectedRoute
