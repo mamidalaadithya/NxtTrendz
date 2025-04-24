@@ -22,8 +22,8 @@
     "gh-pages": "^6.0.0"
   },
   "scripts": {
-    "start": "set NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
-    "build": "set NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
