@@ -3,15 +3,16 @@
     "browser": true,
     "es2021": true
   },
-  "parser": "babel-eslint",
-  "extends": ["react-app", "airbnb", "prettier"],
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
+    "requireConfigFile": false,
     "ecmaFeatures": {
       "jsx": true
     },
     "ecmaVersion": 12,
     "sourceType": "module"
   },
+  "extends": ["react-app", "airbnb", "prettier"],
   "plugins": ["prettier"],
   "overrides": [
     {
@@ -23,7 +24,7 @@
   ],
   "rules": {
     "prettier/prettier": "error",
-    "react/jsx-filename-extension": [1, {"extensions": [".js", ".jsx"]}],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/state-in-constructor": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-uses-react": "off",
@@ -36,12 +37,7 @@
       }
     ],
     "jsx-a11y/click-events-have-key-events": 0,
-    "jsx-a11y/no-noninteractive-element-interactions": [
-      "off",
-      {
-        "handlers": ["onClick"]
-      }
-    ],
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
     "react/prefer-stateless-function": [
       0,
       {
